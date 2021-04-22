@@ -30,6 +30,7 @@ phases:
       - printf '[{"name":"infrastructure-cdk","imageUri":"%s"}]' $ECR_REPOSITORY_URI:$IMAGE_TAG  > imageDetail.json
       - echo Deploying image to ECS cluster
       - printf '[{"name":"defaultContainer","imageUri":"%s"}]' $ECR_REPOSITORY_URI:$IMAGE_TAG  > imageDetail.json
+      - cat .env >> imageDetails.json
 artifacts:
   files:
     - imageDetail.json
