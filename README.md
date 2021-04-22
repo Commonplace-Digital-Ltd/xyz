@@ -9,7 +9,7 @@ The XYZ stack consists of several application layers.
 The pattern for the Node **domain and service layers** are that of a RESTful API which provides secure gateways for spatial data sources and 3rd party service providers. The domain layer handles API routing, rewrites, and ressource caching while the service layer manages authentication and processes transaction script. URL parameter (and payloads) from the application control layer are assigned to query templates and passed to the data source layer. The response from the database connection pool is then parsed into JSON and returned to the presentation layer. The Node application layers may be served by an Express web server or deployed as serverless functions to the cloud.
 
 Spatial data must be stored in a cloud accessible PostGIS database to allow for the creation and caching of vector tiles in the **data source layer**.
-
+ 
 **Application control and presentation layers** are provided as an ES6 javscript library. XYZ' client library utilizes the Openlayers mapping engine among other visualisation libraries such as Tabulator and ChartJS to power engaging application views.
 
 Please visit [geolytix.github.io/xyz/docs](https://geolytix.github.io/xyz/docs) for project documentation hosted from the development branch of this repository.
