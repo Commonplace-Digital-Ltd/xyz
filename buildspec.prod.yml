@@ -28,7 +28,6 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"name":"infrastructure-cdk","imageUri":"%s"}]' $ECR_REPOSITORY_URI:$IMAGE_TAG  > imageDetail.json
       - echo Deploying image to ECS cluster
       - printf '[{"name":"defaultContainer","imageUri":"%s"}]' $ECR_REPOSITORY_URI:$IMAGE_TAG  > imageDetail.json
 artifacts:
