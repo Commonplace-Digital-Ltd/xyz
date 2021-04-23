@@ -20,7 +20,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - echo Generating .env file
-      - echo "WORKSPACE=https://prd-maps-1540717452.eu-west-2.elb.amazonaws.com:3000/workspaces/commonplace.json" > .env
+      - echo "WORKSPACE=http://localhost:3000/workspaces/commonplace.json" > .env
       - echo "DBS_XYZ=${DBS_XYZ_database}://${DBS_XYZ_username}:${DBS_XYZ_password}@${DBS_XYZ_host}:${DBS_XYZ_port}/${DBS_XYZ_database}" >> .env
       - docker build -t $ECR_REPOSITORY_URI:$IMAGE_TAG .
   post_build:
