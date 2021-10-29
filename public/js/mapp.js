@@ -51,7 +51,7 @@
     <circle cx=10.226 cy=8.871 r=5.612 opacity=0.8 fill="rgb(255, 255, 255)"/>
     <circle cx=10.226 cy=8.871 r=2.806 opacity=0.8 fill=${e.colorDot}/>`;return`data:image/svg+xml,${encodeURIComponent(N.serializeToString(t))}`},circle:function(e){const t=H.node`
   <svg width=50 height=50 viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'>
-    <circle cx=15 cy=15 r=6
+    <circle cx=15 cy=15 r=8
       stroke="${e.strokeColor||"#333"}"
       stroke-width="${e.strokeWidth||1}"
       stroke-opacity="${e.strokeOpacity||1}"
