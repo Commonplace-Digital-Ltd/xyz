@@ -1,5 +1,4 @@
 const dotenv = require('dotenv');
-const compression = require('compression')
 
 dotenv.config();
 
@@ -11,7 +10,7 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(process.env.DIR || '', compression(), express.static('public'));
+app.use(process.env.DIR || '', express.static('public'));
 
 app.use(`/xyz/docs`, express.static('docs'));
 
