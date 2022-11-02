@@ -28,7 +28,9 @@ const filterTypes = {
 
   elemMatch: (col, val) => `${col} @> \$${addValues(JSON.stringify(val))}`, /* val must be an array of objects */
 
-  iRgx: (col, val) => `${col} ~* \$${addValues(val)}`
+  iRgx: (col, val) => `${col} ~* \$${addValues(val)}`,
+
+  rgx: (col, val) => `${col} ~ \$${addValues(val)}`
 
 }
 
