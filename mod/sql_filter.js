@@ -30,7 +30,9 @@ const filterTypes = {
 
   iRgx: (col, val) => `${col} ~* \$${addValues(val)}`,
 
-  rgx: (col, val) => `${col} ~ \$${addValues(val)}`
+  rgx: (col, val) => `${col} ~ \$${addValues(val)}`,
+
+  similar: (col, val) => `${col} SIMILAR TO \$${addValues(`%${val}%`)}`
 
 }
 
