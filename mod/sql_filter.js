@@ -13,7 +13,7 @@ const filterTypes = {
 
   ni: (col, val) => `NOT ${col} = ANY (\$${addValues([val])})`,
 
-  in: (col, val) => `${col} = ANY (\$${addValues([val])})`,
+  in: (col, val) => `${col} = ANY (\$${addValues([val])})`, /* val must be an array */
 
   null: (col, val) => `${col} IS ${!val ? 'NOT' : ''} NULL`,
 
@@ -64,12 +64,15 @@ function mapFilterEntries(filter) {
 
     // Map filter entries
     .map((entry) => {
-
       const field = entry[0]
       const value = entry[1]
 
       // Array entry values represent conditional OR
-      if (value?.length) return sqlfilter(value);
+      if (value?.length) {
+        return `(${value
+          .map((filter) => mapFilterEntries(filter))
+          .join(' OR ')})`
+      }
 
       // Identifiers must be validated to prevent SQL injection, if has -> then it is a jsonb filter      
       if (!/^[A-Za-z0-9._-]*$/.test(field) && !/->/.test(field) && !/!?~\*?/.test(field)) {
