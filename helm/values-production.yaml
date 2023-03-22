@@ -1,0 +1,12 @@
+# These values apply to the production environment, and overrides config in values.yaml
+# as needed.
+#
+# This values file is applied on each deployment to the environment by AWS Codepipeline.
+#
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 200
+  targetMemoryUtilizationPercentage: 200

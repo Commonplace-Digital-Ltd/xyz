@@ -1,0 +1,48 @@
+# These values apply to all environments, and it is possible to override them
+# using the values-<cluster>.yaml file in this same folder
+#
+# This values file is applied by AWS Codepipeline, please do NOT rename.
+#
+
+updateStrategy:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 1
+    type: RollingUpdate
+
+service:
+  type: ClusterIP
+  enabled: true
+  port:
+  targetPort:
+
+env:
+  NEW_RELIC_APP_NAME: map
+  NODE_ENV: production
+  PORT: 3100
+  WORKSPACE: dynamic
+
+readinessProbe:
+  path: ""
+  port: ""
+  initialDelaySeconds: "30"
+  failureThreshold: "3"
+  periodSeconds: "15"
+  timeoutSeconds: "1"
+
+livenessProbe:
+  path: ""
+  port: ""
+  initialDelaySeconds: "30"
+  failureThreshold: "3"
+  periodSeconds: "10"
+  timeoutSeconds: "1"
+
+resources:
+  limits:
+    cpu: "45m"
+    memory: "300Mi"
+  requests:
+    cpu: "15m"
+    memory: "105Mi"
