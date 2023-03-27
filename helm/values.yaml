@@ -26,21 +26,21 @@ env:
   PORT: 3100
   WORKSPACE: dynamic
 
-readinessProbe:
-  path: ""
-  port: ""
-  initialDelaySeconds: "30"
-  failureThreshold: "3"
-  periodSeconds: "15"
-  timeoutSeconds: "1"
-
-livenessProbe:
-  path: ""
-  port: ""
-  initialDelaySeconds: "30"
-  failureThreshold: "3"
-  periodSeconds: "10"
-  timeoutSeconds: "1"
+#readinessProbe:
+#  path: ""
+#  port: "80"
+#  initialDelaySeconds: "30"
+#  failureThreshold: "3"
+#  periodSeconds: "15"
+#  timeoutSeconds: "1"
+#
+#livenessProbe:
+#  path: ""
+#  port: "80"
+#  initialDelaySeconds: "30"
+#  failureThreshold: "3"
+#  periodSeconds: "10"
+#  timeoutSeconds: "1"
 
 resources:
   limits:
