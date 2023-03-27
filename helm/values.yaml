@@ -19,6 +19,9 @@ service:
 
 env:
   NEW_RELIC_APP_NAME: map
+  NEW_RELIC_LOG: stdout
+  NEW_RELIC_LOG_ENABLED: true
+  NEW_RELIC_LOG_LEVEL: warning
   NODE_ENV: production
   PORT: 3100
   WORKSPACE: dynamic
