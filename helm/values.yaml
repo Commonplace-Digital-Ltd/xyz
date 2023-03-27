@@ -41,7 +41,6 @@ livenessProbe:
 
 resources:
   limits:
-    cpu: "45m"
     memory: "300Mi"
   requests:
     cpu: "15m"
