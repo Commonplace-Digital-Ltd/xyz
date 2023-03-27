@@ -1,4 +1,7 @@
+const dotenv = require('dotenv');
 const compression = require('compression')
+
+dotenv.config();
 
 const express = require('express');
 
