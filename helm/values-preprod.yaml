@@ -5,6 +5,7 @@
 #
 env:
   XYZ_ENV: preprod
+  MONGODB_URL: mongodb+srv://commonplace-preprod-pre-prod-pl-0.rcb9r.mongodb.net?retryWrites=true&w=3&readPreference=nearest
 
 autoscaling:
   enabled: true

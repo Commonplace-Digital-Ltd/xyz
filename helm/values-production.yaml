@@ -5,6 +5,7 @@
 #
 env:
   XYZ_ENV: production
+  MONGODB_URL: mongodb+srv://cp-pl-0.lfxwi.mongodb.net?retryWrites=true&w=3&readPreference=nearest
 
 autoscaling:
   enabled: true
