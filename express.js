@@ -18,10 +18,33 @@ app.use(`/xyz/docs`, express.static('docs'));
 app.use(cookieParser());
 app.use(cors());
 
+//
+// Requires 3 secrets in SecretsManager
+//   production/xyz/mongodb
+//   preprod/xyz/mongodb
+//   staging/xyz/mongodb
+// each with
+//   username, password and url
+//
+const {SecretsManager} = require("aws-sdk");
 const mongoConnection = async () => {
-  const uri = process.env.MONGO_URL;
+  let secretClient = new SecretsManager({ region: process.env.AWS_DEFAULT_REGION });
+  let secretId = `${process.env.XYZ_ENV}/xyz/mongodb`;
+  const mongoDbSecret = await secretClient.getSecretValue({SecretId: secretId}).promise().then((data) => {
+    return JSON.parse(data.SecretString);
+  })
+
+  const mongoOptions = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    auth: {
+      username: mongoDbSecret["username"],
+      password: mongoDbSecret["password"],
+    },
+  };
+
   const { MongoClient } = require('mongodb');
-  const mongoClient = new MongoClient(uri, { useUnifiedTopology: true });
+  const mongoClient = new MongoClient(process.env.MONGODB_URL, mongoOptions);
   await mongoClient.connect();
   return mongoClient;
 };

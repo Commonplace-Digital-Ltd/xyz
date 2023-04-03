@@ -3,6 +3,8 @@
 #
 # This values file is applied on each deployment to the environment by AWS Codepipeline.
 #
+env:
+  XYZ_ENV: preprod
 
 autoscaling:
   enabled: true
