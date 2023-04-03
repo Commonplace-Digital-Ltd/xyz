@@ -6,6 +6,7 @@
 env:
   XYZ_ENV: preprod
   MONGODB_URL: mongodb+srv://commonplace-preprod-pre-prod-pl-0.rcb9r.mongodb.net?retryWrites=true&w=3&readPreference=nearest
+  DBS_XYZ: postgres://mappreprod.ct36hfcslmg5.eu-west-2.rds.amazonaws.com/map
 
 autoscaling:
   enabled: true
