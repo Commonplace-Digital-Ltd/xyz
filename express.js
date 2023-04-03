@@ -23,8 +23,7 @@ app.use(cors());
 //   production/xyz/mongodb
 //   preprod/xyz/mongodb
 //   staging/xyz/mongodb
-// each with
-//   username, password and url
+// each with username and password (not url)
 //
 const {SecretsManager} = require("aws-sdk");
 const mongoConnection = async () => {
