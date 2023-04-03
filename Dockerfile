@@ -27,4 +27,10 @@ COPY --chown=node:node --from=build /usr/src/app/mod mod
 COPY --chown=node:node --from=build /usr/src/app/public public
 COPY --chown=node:node --from=build /usr/src/app/express.js express.js
 
+# Default/weakest values for global variables (all envs)
+ENV COOKIE_TTL=3600
+ENV TITLE="GEOLYTIX | XYZ"
+ENV DIR=""
+ENV PORT=3000
+
 CMD ["dumb-init", "node", "express.js"]
