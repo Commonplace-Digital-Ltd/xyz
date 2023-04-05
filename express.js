@@ -19,13 +19,13 @@ app.use(`/xyz/docs`, express.static('docs'));
 app.use(cookieParser());
 app.use(cors());
 
-//
-// Requires 3 secrets in SecretsManager
-//   production/xyz/mongodb
-//   preprod/xyz/mongodb
-//   staging/xyz/mongodb
-// each with username and password (not url)
-//
+/*
+Requires 3 secrets in SecretsManager
+  - production/xyz/mongodb
+  - preprod/xyz/mongodb
+  - staging/xyz/mongodb
+  each with username and password (not url)
+*/
 const {SecretsManager} = require("aws-sdk");
 const mongoConnection = async () => {
   let secretClient = new SecretsManager({ region: process.env.AWS_DEFAULT_REGION });
@@ -44,7 +44,7 @@ const mongoConnection = async () => {
   };
 
   const { MongoClient } = require('mongodb');
-  const mongoClient = new MongoClient(process.env.MONGODB_URL, mongoOptions);
+  const mongoClient = new MongoClient(process.env.MONGO_URL, mongoOptions);
   await mongoClient.connect();
   return mongoClient;
 };
@@ -57,7 +57,8 @@ mongoConnection().then(async (db) => {
     return _api(req, res);
   };
 
-  let dir = process.env.DIR;
+  const dir = process.env.DIR || '';
+
   app.get(`${dir}/api/proxy`, api);
 
   app.get(`${dir}/api/provider/:provider?`, api);
@@ -129,5 +130,5 @@ mongoConnection().then(async (db) => {
 
   dir && app.get(`/`, api);
 
-  app.listen(process.env.PORT);
+  app.listen(process.env.PORT, () => console.log('Listening on port', process.env.PORT));
 });
