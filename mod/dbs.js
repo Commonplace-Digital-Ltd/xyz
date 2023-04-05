@@ -1,7 +1,10 @@
 const { Pool } = require('pg');
+const {SecretsManager} = require("aws-sdk");
 
 const dbs = {};
 
+// Needs a DBS_XYZ envvar with the connection string
+// without the username/password information
 module.exports = () => {
   Object.keys(process.env)
     .filter((key) => key.split('_')[0] === 'DBS')
@@ -14,9 +17,17 @@ module.exports = () => {
         return aurora(key.split('_')[1], process.env[key]);
     });
 
-  function postgres(key, connectionString) {
+  async function postgres(key, connectionString) {
+    let secretClient = new SecretsManager({region: process.env.AWS_DEFAULT_REGION});
+    let secretId = `${process.env.XYZ_ENV}/xyz/pg`;
+    const pgSecret = await secretClient.getSecretValue({SecretId: secretId}).promise().then((data) => {
+      return JSON.parse(data.SecretString);
+    })
+
     // Create connection pool.
     const pool = new Pool({
+      user: pgSecret["username"],
+      password: pgSecret["password"],
       connectionString: connectionString,
       statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000,
     });
@@ -26,7 +37,7 @@ module.exports = () => {
       try {
         timeout && (await pool.query(`SET statement_timeout = ${timeout}`));
 
-        const { rows } = await pool.query(q, arr);
+        const {rows} = await pool.query(q, arr);
 
         timeout && (await pool.query(`SET statement_timeout = 10000`));
 

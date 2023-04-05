@@ -25,12 +25,6 @@ const routes = {
   provider: provider,
 }
 
-process.env.COOKIE_TTL = process.env.COOKIE_TTL || 3600
-
-process.env.TITLE = process.env.TITLE || 'GEOLYTIX | XYZ'
-
-process.env.DIR = process.env.DIR || ''
-
 function IEdetect(sUsrAg) {
   if (sUsrAg.indexOf("Firefox") > -1) return false
 
@@ -93,7 +87,7 @@ module.exports = async (req, res) => {
     res.setHeader('Set-Cookie', `${process.env.TITLE}=null;HttpOnly;Max-Age=0;Path=${process.env.DIR || '/'}`)
 
     // Remove logout parameter.
-    res.setHeader('location', req.url && decodeURIComponent(req.url).replace(/logout\=true/, ''))
+    res.setHeader('location', req.url && decodeURIComponent(req.url).replace(/logout=true/, ''))
 
     return res.status(302).send()
   }
@@ -118,7 +112,7 @@ module.exports = async (req, res) => {
   req.params.user = user
 
   // Retrieve path component from request URL for method routing.
-  const path = req.url.match(/(?<=\/api\/)(.*?)[\/\?]/)
+  const path = req.url.match(/(?<=\/api\/)(.*?)[\/?]/)
 
   // Short circuit proxy requests.
   if (path && path[0] === 'proxy?') return proxy(req, res)

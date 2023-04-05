@@ -10,7 +10,7 @@ COPY api api
 COPY lib lib
 COPY mod mod
 COPY public public
-COPY express.js express.js
+COPY *.js ./
 
 RUN npm ci --omit=dev
 
@@ -25,6 +25,13 @@ COPY --chown=node:node --from=build /usr/src/app/api api
 COPY --chown=node:node --from=build /usr/src/app/lib lib
 COPY --chown=node:node --from=build /usr/src/app/mod mod
 COPY --chown=node:node --from=build /usr/src/app/public public
-COPY --chown=node:node --from=build /usr/src/app/express.js express.js
+COPY --chown=node:node --from=build /usr/src/app/*.js ./
+
+# Default/weakest values for global variables (all envs)
+ENV COOKIE_TTL=3600
+ENV TITLE="GEOLYTIX | XYZ"
+ENV DIR=""
+ENV PORT=3000
+ENV AWS_DEFAULT_REGION="eu-west-2"
 
 CMD ["dumb-init", "node", "express.js"]
