@@ -10,7 +10,7 @@ COPY api api
 COPY lib lib
 COPY mod mod
 COPY public public
-COPY *.js .
+COPY *.js ./
 
 RUN npm ci --omit=dev
 
