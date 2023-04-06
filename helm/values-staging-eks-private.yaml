@@ -5,7 +5,7 @@
 #
 env:
   XYZ_ENV: staging
-  MONGO_URL: mongodb+srv://cp-non-prod-pl-0.lfxwi.mongodb.net?retryWrites=true&w=3&readPreference=nearest
+  MONGO_URL: mongodb+srv://cp-non-prod.lfxwi.mongodb.net?retryWrites=true&w=3&readPreference=nearest
   DBS_XYZ: postgres://cp-staging.ct36hfcslmg5.eu-west-2.rds.amazonaws.com/map
   NEW_RELIC_LICENSE_KEY: eu01xx7895d7f26535be46f75e14245ae5f9NRAL
 
