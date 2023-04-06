@@ -7,6 +7,7 @@ env:
   XYZ_ENV: production
   MONGO_URL: mongodb+srv://cp-pl-0.lfxwi.mongodb.net?retryWrites=true&w=3&readPreference=nearest
   DBS_XYZ: postgres://map-production.ct36hfcslmg5.eu-west-2.rds.amazonaws.com/map
+  NEW_RELIC_LICENSE_KEY: eu01xx25a8db3b00741d64d4e895e22794c4NRAL
 
 autoscaling:
   enabled: true
