@@ -31,7 +31,11 @@ COPY --chown=node:node --from=build /usr/src/app/*.js ./
 ENV COOKIE_TTL=3600
 ENV TITLE="GEOLYTIX | XYZ"
 ENV DIR=""
-ENV PORT=3000
 ENV AWS_DEFAULT_REGION="eu-west-2"
+
+# Set default and expose port for local development
+ARG PORT=3100
+ENV PORT=$PORT
+EXPOSE $PORT
 
 CMD ["dumb-init", "node", "express.js"]

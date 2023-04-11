@@ -14,8 +14,8 @@ updateStrategy:
 service:
   type: ClusterIP
   enabled: true
-  port: 3100
-  targetPort: 80
+  port: 80
+  targetPort: 3100
 
 env:
   NEW_RELIC_APP_NAME: map
@@ -34,14 +34,14 @@ env:
 #  failureThreshold: "3"
 #  periodSeconds: "15"
 #  timeoutSeconds: "1"
-#
-#livenessProbe:
-#  path: ""
-#  port: "80"
-#  initialDelaySeconds: "30"
-#  failureThreshold: "3"
-#  periodSeconds: "10"
-#  timeoutSeconds: "1"
+
+livenessProbe:
+  path: "/ping"
+  port: "3100"
+  initialDelaySeconds: "5"
+  failureThreshold: "3"
+  periodSeconds: "30"
+  timeoutSeconds: "2"
 
 resources:
   limits:
