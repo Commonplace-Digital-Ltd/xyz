@@ -14,8 +14,8 @@ updateStrategy:
 service:
   type: ClusterIP
   enabled: true
-  port: 3100
-  targetPort: 80
+  port: 80
+  targetPort: 3100
 
 env:
   NEW_RELIC_APP_NAME: map
