@@ -13,7 +13,6 @@ COPY public public
 COPY *.js ./
 
 RUN npm ci --omit=dev
-RUN npm run _build
 
 # --------------> The production image
 FROM node:16.17.0-bullseye-slim
