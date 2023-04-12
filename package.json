@@ -13,6 +13,7 @@
     "_dev": "webpack --mode development -w"
   },
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.310.0",
     "@turf/circle": "^6.3.0",
     "@turf/flatten": "^6.3.0",
     "@turf/kinks": "^6.3.0",
@@ -40,8 +41,8 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.6.0",
     "pg": "^8.5.1",
-    "uhtml": "^2.5.3",
     "saml2-js": "^3.0.1",
+    "uhtml": "^2.5.3",
     "webpack": "^5.28.0",
     "webpack-cli": "^4.3.1"
   },
