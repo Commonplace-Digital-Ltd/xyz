@@ -20,6 +20,7 @@ app.use(`/xyz/docs`, express.static('docs'));
 
 app.use(cookieParser());
 app.use(cors());
+const dbs = require('./mod/dbs');
 
 /*
 Requires 3 secrets in SecretsManager

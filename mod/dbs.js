@@ -24,15 +24,13 @@ module.exports = () => {
       return JSON.parse(data.SecretString);
     })
 
-    const isLocal = process.env.ENV === 'local';
-
     // Create connection pool.
     const pool = new Pool({
       database: 'map',
       user: pgSecret['username'],
       password: pgSecret['password'],
+      host,
       port: 5432,
-      ...(isLocal ?  {connectionString: host} : {host: host}),
       statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000
     });
 
