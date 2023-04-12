@@ -19,18 +19,20 @@ module.exports = () => {
 
   async function postgres(key, host) {
     const secretClient = new SecretsManager({region: process.env.AWS_DEFAULT_REGION});
-    const secretId = `${process.env.XYZ_ENV}/xyz4/pg`;
+    const secretId = `${process.env.XYZ_ENV}/xyz/pg`;
     const pgSecret = await secretClient.getSecretValue({SecretId: secretId}).then((data) => {
       return JSON.parse(data.SecretString);
     })
+
+    const isLocal = process.env.ENV === 'local';
 
     // Create connection pool.
     const pool = new Pool({
       database: 'map',
       user: pgSecret['username'],
       password: pgSecret['password'],
-      host,
       port: 5432,
+      ...(isLocal ?  {connectionString: host} : {host: host}),
       statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000
     });
 
