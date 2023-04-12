@@ -1,4 +1,6 @@
 require('newrelic');
+const { SecretsManager } = require("@aws-sdk/client-secrets-manager");
+
 const dotenv = require('dotenv');
 const compression = require('compression')
 
@@ -26,11 +28,10 @@ Requires 3 secrets in SecretsManager
   - staging/xyz/mongodb
   each with username and password (not url)
 */
-const {SecretsManager} = require("aws-sdk");
 const mongoConnection = async () => {
   let secretClient = new SecretsManager({ region: process.env.AWS_DEFAULT_REGION });
   let secretId = `${process.env.XYZ_ENV}/xyz/mongodb`;
-  const mongoDbSecret = await secretClient.getSecretValue({SecretId: secretId}).promise().then((data) => {
+  const mongoDbSecret = await secretClient.getSecretValue({SecretId: secretId}).then((data) => {
     return JSON.parse(data.SecretString);
   })
 
@@ -58,6 +59,28 @@ mongoConnection().then(async (db) => {
   };
 
   const dir = process.env.DIR || '';
+
+  app.use((req, res, next) => {
+    // Log the Request
+    console.info(
+      `Incoming Request -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}]`
+    );
+
+    res.on('finish', () => {
+      // Log the Response
+      console.info(
+        `Incoming Response -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}] - Status: [${res.statusCode}]`
+      );
+    });
+
+    res.on('finish', () => {
+      console.info('----------');
+    });
+
+    next();
+  });
+
+  app.get(`${process.env.DIR || ''}/api/proxy`, api);
 
   app.get(`${dir}/api/proxy`, api);
 
@@ -127,6 +150,10 @@ mongoConnection().then(async (db) => {
   app.get(`${dir}/ping`, (req, res) =>
     res.json({ works: true })
   );
+
+  app.get(`${dir}/ready`, async (_, res) => {
+    res.send({ message: 'OK', dbs: Object.keys(await dbs()) });
+  });
 
   dir && app.get(`/`, api);
 
