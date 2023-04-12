@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const {SecretsManager} = require("aws-sdk");
+const { SecretsManager } = require('@aws-sdk/client-secrets-manager');
 
 const dbs = {};
 
@@ -9,27 +9,29 @@ module.exports = () => {
   Object.keys(process.env)
     .filter((key) => key.split('_')[0] === 'DBS')
     .filter((key) => !dbs[key.split('_')[1]])
-    .forEach((key) => {
+    .forEach(async (key) => {
       if (process.env[key].match(/^postgres/))
-        return postgres(key.split('_')[1], process.env[key]);
+        return await postgres(key.split('_')[1], process.env[key]);
 
       if (process.env[key].match(/^aurora/))
         return aurora(key.split('_')[1], process.env[key]);
     });
 
-  async function postgres(key, connectionString) {
-    let secretClient = new SecretsManager({region: process.env.AWS_DEFAULT_REGION});
-    let secretId = `${process.env.XYZ_ENV}/xyz/pg`;
-    const pgSecret = await secretClient.getSecretValue({SecretId: secretId}).promise().then((data) => {
+  async function postgres(key, host) {
+    const secretClient = new SecretsManager({region: process.env.AWS_DEFAULT_REGION});
+    const secretId = `${process.env.XYZ_ENV}/xyz/pg`;
+    const pgSecret = await secretClient.getSecretValue({SecretId: secretId}).then((data) => {
       return JSON.parse(data.SecretString);
     })
 
     // Create connection pool.
     const pool = new Pool({
-      user: pgSecret["username"],
-      password: pgSecret["password"],
-      connectionString: connectionString,
-      statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000,
+      database: 'map',
+      user: pgSecret['username'],
+      password: pgSecret['password'],
+      host,
+      port: 5432,
+      statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000
     });
 
     dbs[key] = async (q, arr, timeout) => {
