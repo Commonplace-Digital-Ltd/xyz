@@ -10,7 +10,7 @@ module.exports = () => {
     .filter((key) => key.split('_')[0] === 'DBS')
     .filter((key) => !dbs[key.split('_')[1]])
     .forEach(async (key) => {
-      if (process.env[key].match(/^postgres/))
+      if (process.env[key].match(/rds|localhost/))
         return await postgres(key.split('_')[1], process.env[key]);
 
       if (process.env[key].match(/^aurora/))
