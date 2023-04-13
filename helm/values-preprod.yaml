@@ -6,7 +6,7 @@
 env:
   XYZ_ENV: preprod
   MONGO_URL: mongodb+srv://commonplace-preprod-pre-prod-pl-0.rcb9r.mongodb.net?retryWrites=true&w=3&readPreference=nearest
-  DBS_XYZ: postgres://mappreprod.ct36hfcslmg5.eu-west-2.rds.amazonaws.com/map
+  DBS_XYZ: mappreprod.ct36hfcslmg5.eu-west-2.rds.amazonaws.com
   NEW_RELIC_LICENSE_KEY: eu01xx97418170c5ac03c17292a6b215c022NRAL
 
 autoscaling:
