@@ -18,20 +18,23 @@ module.exports = () => {
     });
 
   async function postgres(key, host) {
-    const secretClient = new SecretsManager({region: process.env.AWS_DEFAULT_REGION});
+    const secretClient = new SecretsManager({ region: process.env.AWS_DEFAULT_REGION });
     const secretId = `${process.env.XYZ_ENV}/xyz/pg`;
-    const pgSecret = await secretClient.getSecretValue({SecretId: secretId}).then((data) => {
+    const pgSecret = await secretClient.getSecretValue({ SecretId: secretId }).then((data) => {
       return JSON.parse(data.SecretString);
     })
 
     // Create connection pool.
+    console.log('Creating postgres connection pool...')
     const pool = new Pool({
       database: 'map',
       user: pgSecret['username'],
       password: pgSecret['password'],
       host,
       port: 5432,
-      statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000
+      statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000,
+      max: 15,
+      idleTimeoutMillis: 30000,
     });
 
     dbs[key] = async (q, arr, timeout) => {
@@ -39,7 +42,7 @@ module.exports = () => {
       try {
         timeout && (await pool.query(`SET statement_timeout = ${timeout}`));
 
-        const {rows} = await pool.query(q, arr);
+        const { rows } = await pool.query(q, arr);
 
         timeout && (await pool.query(`SET statement_timeout = 10000`));
 
