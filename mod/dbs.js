@@ -33,7 +33,7 @@ module.exports = () => {
       host,
       port: 5432,
       statement_timeout: parseInt(process.env.STATEMENT_TIMEOUT) || 10000,
-      max: 15,
+      max: 50,
       idleTimeoutMillis: 30000,
     });
 
