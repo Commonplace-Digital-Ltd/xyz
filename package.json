@@ -35,7 +35,7 @@
     "lodash": "^4.17.20",
     "markdown-it": "^11.0.1",
     "markdown-it-anchor": "^6.0.0",
-    "mongodb": "^3.7.0",
+    "mongodb": "^4.11.0",
     "nanoid": "^3.1.20",
     "newrelic": "^9.14.1",
     "node-fetch": "^2.6.1",
