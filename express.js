@@ -38,7 +38,6 @@ const mongoConnection = async () => {
 
   const mongoOptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
     auth: {
       username: mongoDbSecret["username"],
       password: mongoDbSecret["password"],
