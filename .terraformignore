@@ -1,8 +1,2 @@
-.github/
-.idea/
-api/
-helm/
-lib/
-mod/
-node_modules/
-public/
+/**
+!terraform/
